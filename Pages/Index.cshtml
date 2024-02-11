@@ -1,0 +1,38 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/aframe.js"></script>
+    <script src="~/js/aframe-ar-nft.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex-location-only.js'></script>
+    <script src="~/js/arSorimachi.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene vr-mode-ui="enabled: false"
+             arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'>
+        <a-assets>
+            <img id="pinLocation" src="~/img/pin_location.png">
+            <img id="tatekanban" src="~/img/tatekanban.png">
+        </a-assets>
+@*         <!-- visible, is like 400m far -->
+        <a-image src="#pinLocation" scale="5 5 5" gps-projected-entity-place="latitude: 10.799552250317975; longitude: 106.70120583420797;"></a-image>
+        <!-- visible, is like 400m far -->
+        <a-image src="#pinLocation" scale="5 5 5" gps-projected-entity-place="latitude: 10.800086223037452; longitude: 106.70167928853107;"></a-image>
+        <!-- too far, is like 2.5km far -->
+        <a-image src="#pinLocation" scale="5 5 5" gps-projected-entity-place="latitude: 10.800914139149272; longitude: 106.69927703822384;"></a-image>
+ *@
+        <a-camera rotation-reader>
+        </a-camera>
+    </a-scene>
+</body>
+</html>
