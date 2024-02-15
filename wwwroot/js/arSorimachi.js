@@ -35,12 +35,20 @@ var data_chua = [
     { latitude: 10.803574698464109, longitude: 106.70377563819687 },
     { latitude: 10.803576656015402, longitude: 106.70368097669096 },
 ]
+var data_dh_HongBang = [
+    { latitude: 10.797388744190782, longitude: 106.70349447346798 },
+    { latitude: 10.797268864275024, longitude: 106.7033147654386 },
+    { latitude: 10.797433534476697, longitude: 106.70301838130057 },
+    { latitude: 10.79768515037054, longitude: 106.703228934738 },
+]
+
 
 var data = [
     { name: "Báo tuổi trẻ", polygon: data_Sorimachi },
-    { name: "Nhà Việt Anh", polygon: data_VA },
+/*    { name: "Nhà Việt Anh", polygon: data_VA },*/
     { name: "Chợ bà chiểu", polygon: data_Ba_Chieu },
     { name: "Chùa bồ đề", polygon: data_chua },
+    { name: "đại học Kinh tế tài chính", polygon: data_dh_HongBang }
 ]
 
 var src_pin_location = "/img/pin_location.png";
@@ -124,7 +132,7 @@ function InitImage(my_location) {
 function CreateImagePinLocation(my_location, data) {
     var NearstPoint = FindNearstPoint(my_location, data);
     const image = document.createRange().createContextualFragment(`
-         <a-image src="#pinLocation" scale="5 5 5" gps-projected-entity-place="latitude: ${NearstPoint.latitude}; longitude: ${NearstPoint.longitude};"></a-image>
+         <a-image src="#pinLocation" scale="20 20 20" gps-projected-entity-place="latitude: ${NearstPoint.latitude}; longitude: ${NearstPoint.longitude};"></a-image>
     `);
     return image;
 
@@ -157,8 +165,8 @@ function CreateImageTatekanban(my_location, data, i) {
     assests.appendChild(text_tatekanban_img);
 
     const image = document.createRange().createContextualFragment(`
-         <a-image src="${src_tatekanban}" scale="8 8 8" gps-projected-entity-place="latitude: ${NearstPoint.latitude}; longitude: ${NearstPoint.longitude};" position="0 6.5 0"></a-image>
-         <a-image src="#text_tatekanban_${i}" scale="8 8 8" gps-projected-entity-place="latitude: ${NearstPoint.latitude}; longitude: ${NearstPoint.longitude};" position="0 6.5 -0.1"></a-image>
+         <a-image src="${src_tatekanban}" scale="32 32 32" gps-projected-entity-place="latitude: ${NearstPoint.latitude}; longitude: ${NearstPoint.longitude};" position="0 26 0"></a-image>
+         <a-image src="#text_tatekanban_${i}" scale="32 32 32" gps-projected-entity-place="latitude: ${NearstPoint.latitude}; longitude: ${NearstPoint.longitude};" position="0 26 -0.1"></a-image>
     `);
     return image;
 }
