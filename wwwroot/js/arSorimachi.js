@@ -35,6 +35,12 @@ var data_chua = [
     { latitude: 10.803574698464109, longitude: 106.70377563819687 },
     { latitude: 10.803576656015402, longitude: 106.70368097669096 },
 ]
+var data_chungcu= [
+    { latitude: 10.8001178486308, longitude: 106.70170698617459 },
+    { latitude: 10.800125678925731, longitude: 106.70193018803192 },
+    { latitude: 10.799606921443226, longitude: 106.70222114761889 },
+    { latitude: 10.799512957728288, longitude: 106.70202385312001 },
+]
 var data_dh_HongBang = [
     { latitude: 10.797388744190782, longitude: 106.70349447346798 },
     { latitude: 10.797268864275024, longitude: 106.7033147654386 },
@@ -48,7 +54,8 @@ var data = [
 /*    { name: "Nhà Việt Anh", polygon: data_VA },*/
     { name: "Chợ bà chiểu", polygon: data_Ba_Chieu },
     { name: "Chùa bồ đề", polygon: data_chua },
-    { name: "đại học Kinh tế tài chính", polygon: data_dh_HongBang }
+    { name: "đại học Kinh tế tài chính", polygon: data_dh_HongBang },
+    { name: "chung cư mỹ phước", polygon: data_chungcu }
 ]
 
 var src_pin_location = "/img/pin_location.png";
