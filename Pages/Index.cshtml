@@ -24,14 +24,7 @@
             <img id="pinLocation" src="~/img/pin_location.png">
             <img id="tatekanban" src="~/img/tatekanban.png">
         </a-assets>
-@*         <!-- visible, is like 400m far -->
-        <a-image src="#pinLocation" scale="5 5 5" gps-projected-entity-place="latitude: 10.799552250317975; longitude: 106.70120583420797;"></a-image>
-        <!-- visible, is like 400m far -->
-        <a-image src="#pinLocation" scale="5 5 5" gps-projected-entity-place="latitude: 10.800086223037452; longitude: 106.70167928853107;"></a-image>
-        <!-- too far, is like 2.5km far -->
-        <a-image src="#pinLocation" scale="5 5 5" gps-projected-entity-place="latitude: 10.800914139149272; longitude: 106.69927703822384;"></a-image>
- *@
-        <a-camera rotation-reader>
+        <a-camera gps-new-camera rotation-reader>
         </a-camera>
     </a-scene>
 </body>
