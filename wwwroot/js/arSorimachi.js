@@ -130,7 +130,27 @@ function InitLocation() {
     }
 }
 
+AFRAME.registerComponent('distance-scale', {
+    schema: {
+        maxDistance: { type: 'number', default: 30 },
+        targetScale: { type: 'vec3', default: new THREE.Vector3(7, 7, 7) }
+    },
 
+    update: function (oldData) {
+        const el = this.el;
+        const data = this.data;
+
+        const distance = el.object3D.position.distanceTo(el.sceneEl.camera.el.object3D.position);
+
+        if (distance < data.maxDistance) {
+            const scaleFactor = Math.min(1, distance / data.maxDistance);
+            const newScale = new THREE.Vector3().lerpVectors(new THREE.Vector3(1, 1, 1), data.targetScale, scaleFactor);
+            el.object3D.scale.set(newScale.x, newScale.y, newScale.z);
+        } else {
+            el.object3D.scale.set(data.targetScale.x, data.targetScale.y, data.targetScale.z);
+        }
+    }
+});
 //Get location success
 function WatchCurrentPosition(position) {
     console.log("Get Location success");
