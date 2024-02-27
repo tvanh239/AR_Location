@@ -1,4 +1,4 @@
-﻿// ------------------------------------Data--------------------------
+// ------------------------------------Data--------------------------
 var data_Sorimachi = [
     { latitude: 10.7998171721485, longitude: 106.678411861847 },
     { latitude: 10.7998991736088, longitude: 106.678087985109 },
@@ -32,7 +32,7 @@ var data_TGDD = [
     { latitude: 10.840119855732384, longitude: 106.79638705665327 },
     { latitude: 10.840052679872864, longitude: 106.79643064255019 },
     { latitude: 10.839967722146413, longitude: 106.79631262535298 },
-    { latitude: 10.840034239438449, longitude: 106.79625495785959 },
+    { latitude: 10.840034239438449, longitude:  106.79625495785959  },
 ]
 
 
@@ -41,7 +41,7 @@ var dataUyBanPN = [
     { latitude: 10.800204451193762, longitude: 106.67796288166538 },
     { latitude: 10.800173493492142, longitude: 106.67794745896525 },
     { latitude: 10.800160978675683, longitude: 106.67797696326116 },
-    { latitude: 10.80017744553933, longitude: 106.6778750393298 },
+    { latitude: 10.80017744553933,  longitude: 106.6778750393298 },
 ]
 
 var dataAroma = [
@@ -57,38 +57,66 @@ var dataVietCombank = [
     { latitude: 10.79900403023501, longitude: 106.67823582853124 },
     { latitude: 10.799016389576135, longitude: 106.67800676078735 },
 ]
-var dataVA = [
-    { latitude: 10.79975224771338, longitude: 106.70103220154627 },
-    { latitude: 10.799774642678182, longitude: 106.70107243467827 },
-    { latitude: 10.799700212347506, longitude: 106.70111467946687 },
-    { latitude: 10.799676500025885, longitude: 106.70106841136506 }
+
+var dataLiendoan = [
+    { latitude: 10.799622274684747, longitude: 106.67843450629233 },
+    { latitude: 10.799756260451595, longitude: 106.67858653731433 },
+    { latitude: 10.799699037370978, longitude: 106.67864621304257 },
+    { latitude: 10.799639022908861, longitude: 106.67858369561299 },
+    { latitude: 10.79960122906476, longitude: 106.67863098241675 },
+    { latitude: 10.799522187959392, longitude:  106.67851967075488 }
 ]
-var datachungCuMyPhuoc = [
-    { latitude: 10.800125296185898, longitude: 106.7017088672338 },
-    { latitude: 10.800130779289834, longitude: 106.70192576695544 },
-    { latitude: 10.799596567834131, longitude: 106.70223038349812 },
-    { latitude: 10.799505704791214, longitude: 106.70206372158573 }
+var dataSang = [
+    { latitude: 10.78091361749272, longitude: 106.6508851429197 },
+    { latitude: 10.78107188830222, longitude: 106.65089146734765 },
+    { latitude: 10.781075220943432, longitude: 106.65083969520745 },
+    { latitude: 10.78091647025328, longitude: 106.65083231913346 }
+]
+var dataSauNhu = [
+    { latitude: 10.780869680473089, longitude: 106.65087760176131 },
+    { latitude: 10.78087099790675, longitude: 106.65090375329635 },
+    { latitude: 10.780770872931942, longitude: 106.65091247047467 },
+    { latitude: 10.780768447246013, longitude: 106.65088211042914 },
 ]
 
 var data = [
-    { name: "Nhà VA", polygon: dataVA },
-    { name: "Chung cư mỹ phước", polygon: datachungCuMyPhuoc },
-    // { name: "Báo tuổi trẻ", polygon: data_Sorimachi },
-/*    { name: "Ủy ban nhân dân", polygon: dataUyBanPN },
-    { name: "Aroma Tieng Anh", polygon: dataAroma },
-    { name: "VietCombank", polygon: dataVietCombank },
+/*    { name: "Sangの家", polygon: dataSang },
+    { name: "Sau Như", polygon: dataSauNhu },*/
+    { name: "労働組合", polygon: dataLiendoan },
+   { name: "ソリマチ会社", polygon: data_Sorimachi },
+    { name: "PhuNhuan人民委員会" , polygon: dataUyBanPN },
+    { name: "Aroma英語", polygon: dataAroma },
+    { name: "VietCom銀行", polygon: dataVietCombank },
     { name: "Nhà chị Luyên", polygon: data_Luyen },
     { name: "Nhà sách mực tím", polygon: data_Luyen_NhaSach },
     { name: "Bún đậu mắm tôm", polygon: data_bundau },
-    { name: "Thế giới di động", polygon: data_TGDD },*/
+    { name: "Thế giới di động", polygon: data_TGDD },
 ]
 
-var src_pin_location = "/img/pin_location.png";
-var src_tatekanban = "/img/tatekanban.png";
+var src_pin_location = "/Content/images/pin_location.png";
+var src_tatekanban = "/Content/images/tatekanban.png";
 var oldLocation = null;
 
 var locationInside = null;
 var arrLocation = [];
+var isCreated = false;
+
+var custormDistance = 10;
+var sizePinLocationLessThanDistance = 3;
+var posTatekanbanLessThanDistance = 5;
+var sizeImgTatekanbanLessThanDistance = 7.5;
+var sizeTextTatekanbanLessThanDistance = 4;
+
+
+var sizePinLocation = 8;
+var posTatekanban = 10;
+var sizeImgTatekanban = 12;
+var sizeTextTatekanban = 5;
+
+var sizePinLocationInside = 1;
+var posTatekanbanInside = 3;
+var sizeImgTatekanbanInside = 4;
+var sizeTextTatekanbanInside = 2.5;
 //-------------------------------------------------------------------
 
 
@@ -116,44 +144,37 @@ var arrLocation = [];
 
 //Program run
 $(function () {
+    google.maps.Polygon.prototype.my_getBounds = function () {
+        var bounds = new google.maps.LatLngBounds()
+        this.getPath().forEach(function (element, index) { bounds.extend(element) })
+        return bounds
+    }
+    CreateArrPolygon();
     InitLocation();
 
 });
+//Create Polygon 
+function CreateArrPolygon() {
+    for (var i = 0; i < data.length; i++) {
+        var polygonGG = CreatePolyGon(data[i].polygon);
+        arrLocation.push(polygonGG);
+    }
+}
 
 // init location
 function InitLocation() {
     if (navigator.geolocation) {
-        console.log("Get Location");
         watchPosition = navigator.geolocation.watchPosition(WatchCurrentPosition, errorCallback);
     } else {
         alert("現在地の取得に失敗しました。");
     }
 }
 
-AFRAME.registerComponent('distance-scale', {
-    schema: {
-        maxDistance: { type: 'number', default: 30 },
-        targetScale: { type: 'vec3', default: new THREE.Vector3(7, 7, 7) }
-    },
 
-    update: function (oldData) {
-        const el = this.el;
-        const data = this.data;
-
-        const distance = el.object3D.position.distanceTo(el.sceneEl.camera.el.object3D.position);
-
-        if (distance < data.maxDistance) {
-            const scaleFactor = Math.min(1, distance / data.maxDistance);
-            const newScale = new THREE.Vector3().lerpVectors(new THREE.Vector3(1, 1, 1), data.targetScale, scaleFactor);
-            el.object3D.scale.set(newScale.x, newScale.y, newScale.z);
-        } else {
-            el.object3D.scale.set(data.targetScale.x, data.targetScale.y, data.targetScale.z);
-        }
-    }
-});
 //Get location success
 function WatchCurrentPosition(position) {
-    console.log("Get Location success");
+
+    // Set location per second
     InitImage(position.coords);
 }
 
@@ -165,37 +186,43 @@ function errorCallback(error) {
 
 //Init image pin location
 function InitImage(my_location) {
-    //var locationGG = new google.maps.LatLng(my_location.latitude, my_location.longitude);
+    var locationGG = new google.maps.LatLng(my_location.latitude, my_location.longitude);
     const scene = document.querySelector('a-scene');
-    if (arrLocation.length == 0) {
+    if (isCreated == false) {
         console.log("Init Image");
-
+        //var kaisha_location = new google.maps.LatLng(10.799794, 106.678385);
         for (var i = 0; i < data.length; i++) {
             //Check Inside Polygon
-
-            //var polygonGG = CreatePolyGon(data[i].polygon);
-            /*if (CheckIsWithinPolygon(locationGG, polygonGG)) {*/
-            /*if (data[i].name == 'Nhà VA') {
+            var CenterPoint = arrLocation[i].my_getBounds().getCenter();
+            //console.log(polygonGG.my_getBounds().getCenter().lat(), polygonGG.my_getBounds().getCenter().lng());
+            if (CheckIsWithinPolygon(locationGG, arrLocation[i])) {
                 alert("Inside " + data[i].name);
-                var tatekanban = CreateImageTatekanbanInside(my_location, data[i].name, i);
+                var tatekanban = CreateImageTatekanbanInside(data[i].name, i, { latitude: CenterPoint.lat(), longitude: CenterPoint.lng() });
                 locationInside = data[i];
             } else {
-                var tatekanban = CreateImageTatekanban(my_location, data[i], i);
-            }*/
-            var nearstPoint = FindNearstPoint(my_location, data[i].polygon);
-            alert(nearstPoint.distance);
-            if (nearstPoint.distance < 0.0005) {
-                var tatekanban = CreateImageTatekanban(my_location, data[i], i);
+                var tatekanban = CreateImageTatekanban(my_location, data[i], i, { latitude: CenterPoint.lat(), longitude: CenterPoint.lng() });
+            }
+            scene.appendChild(tatekanban);
+        }
+        isCreated = true;
+    } else {
+        for (var index = 0; index < data.length; index++) {
+            //var kaisha_location = new google.maps.LatLng(10.799794, 106.678385);
+            if (!CheckIsWithinPolygon(locationGG, arrLocation[index])) {
+                var NearstPoint = FindNearstPoint(my_location, data[index].polygon);
+                /*if (NearstPoint.distance < 30) {
+                    UpdateTatekanban(index);
+                } else {
+                    CheckTatekanban(index);
+                }*/
+                CheckDistanceTatekanban(index, NearstPoint.distance);
             } else {
-                var tatekanban = CreateImageTatekanban(my_location, data[i], i);
+                UpdateTatekanbanInside(index);
+                //var NearstPoint = FindNearstPoint(my_location, data[index].polygon);
+               
             }
             
-            scene.appendChild(tatekanban);
-            arrLocation.push(tatekanban);
-
         }
-    } else {
-
     }
 }
 
@@ -215,8 +242,7 @@ function CreatePolyGon(arr) {
 
 
 // When inside, create tatekanban
-function CreateImageTatekanbanInside(my_location, name, i) {
-    console.log("created tatekanban");
+function CreateImageTatekanbanInside(name, i, my_location) {
     var assests = document.querySelector('a-assets');
     var text_tatekanban_img = document.createElement('img');
     text_tatekanban_img.id = `text_tatekanban_${i}`;
@@ -239,13 +265,12 @@ function CreateImageTatekanbanInside(my_location, name, i) {
     //get Url data
     text_tatekanban_img.src = canvas.toDataURL();
     assests.appendChild(text_tatekanban_img);
-    console.log(my_location);
     const image = document.createRange().createContextualFragment(`
-        <a-entity  gps-new-entity-place="latitude: ${my_location.latitude -0.055}; longitude: ${my_location.longitude};" >
-                <a-image src="#pinLocation" scale="1 1 1" look-at=[camera] ></a-image>
-                <a-entity position="0 2 0" >
-                     <a-image src="${src_tatekanban}" ></a-image>
-                     <a-image src="#text_tatekanban_${i}" position="0 0 -0.5"  ></a-image>
+        <a-entity gps-new-entity-place="latitude: ${my_location.latitude}; longitude: ${my_location.longitude};">
+                <a-image id="pinlocation_${i}" src="#pinLocation" scale="${sizePinLocationInside} ${sizePinLocationInside} ${sizePinLocationInside} " look-at=[camera]   ></a-image>
+                <a-entity id="tatekanban_${i}" position="0 ${posTatekanbanInside} 0" look-at=[camera]>
+                     <a-image id="imgTatekanban_${i}" scale="${sizeImgTatekanbanInside} ${sizeImgTatekanbanInside} ${sizeImgTatekanbanInside}" src="${src_tatekanban}" ></a-image>
+                     <a-image id="textTatekanban_${i}" scale="${sizeTextTatekanbanInside} ${sizeTextTatekanbanInside} ${sizeTextTatekanbanInside}" src="#text_tatekanban_${i}" position="0 0 0.5"  ></a-image>
                 </a-entity>
         </a-entity>
     `);
@@ -257,7 +282,8 @@ function CheckIsWithinPolygon(coordinate, polygon) {
     return google.maps.geometry.poly.containsLocation(coordinate, polygon);
 }
 
-function CreateImageTatekanban(my_location, data, i) {
+
+function CreateImageTatekanban(my_location, data, i,centerPoint) {
 
     var assests = document.querySelector('a-assets');
     var NearstPoint = FindNearstPoint(my_location, data.polygon);
@@ -282,21 +308,42 @@ function CreateImageTatekanban(my_location, data, i) {
     //get Url data
     text_tatekanban_img.src = canvas.toDataURL();
     assests.appendChild(text_tatekanban_img);
-
+    /*if (NearstPoint.distance < 30) {
+        const image = document.createRange().createContextualFragment(`
+        <a-entity  gps-new-entity-place="latitude: ${centerPoint.latitude}; longitude: ${centerPoint.longitude};" look-at=[camera] >
+             <a-image id="pinlocation_${i}" src="#pinLocation" scale="3 3 3"></a-image>
+             <a-entity id="tatekanban_${i}" position="0 5 0">
+                 <a-image id="imgTatekanban_${i}" src="${src_tatekanban}" scale="7.5 7.5 7.5"></a-image>
+                 <a-image id="textTatekanban_${i}" src="#text_tatekanban_${i}" scale="4 4 4" position="0 0 0.5" ></a-image>
+            </a-entity>  
+        </a-entity>
+    `);
+        return image;
+    } else {
+        const image = document.createRange().createContextualFragment(`
+        <a-entity gps-new-entity-place="latitude: ${centerPoint.latitude}; longitude: ${centerPoint.longitude};" look-at=[camera] >
+             <a-image id="pinlocation_${i}" src="#pinLocation" scale="7 7 7" ></a-image>
+             <a-entity id="tatekanban_${i}" position="0 13 0">
+                 <a-image id="imgTatekanban_${i}"  src="${src_tatekanban}" scale="12 12 12"></a-image>
+                 <a-image id="textTatekanban_${i}" src="#text_tatekanban_${i}" scale="6 6 6" position="0 0 0.5" ></a-image>
+            </a-entity>  
+        </a-entity>
+    `);
+        return image;
+    }*/
     const image = document.createRange().createContextualFragment(`
-        <a-entity  gps-new-entity-place="latitude: ${NearstPoint.latitude}; longitude: ${NearstPoint.longitude};" look-at=[camera]>
-             <a-image src="#pinLocation" scale="7 7 7"></a-image>
-             <a-entity position="0 13 0">
-                 <a-image src="${src_tatekanban}" scale="12 12 12"></a-image>
-                 <a-image src="#text_tatekanban_${i}" scale="5 5 5" position="0 0 0.5" ></a-image>
+        <a-entity gps-new-entity-place="latitude: ${centerPoint.latitude}; longitude: ${centerPoint.longitude};" look-at=[camera] >
+             <a-image id="pinlocation_${i}" src="#pinLocation" scale="${sizePinLocation} ${sizePinLocation} ${sizePinLocation}" ></a-image>
+             <a-entity id="tatekanban_${i}" position="0 ${posTatekanban} 0">
+                 <a-image id="imgTatekanban_${i}"  src="${src_tatekanban}" scale="${sizeImgTatekanban} ${sizeImgTatekanban} ${sizeImgTatekanban}"></a-image>
+                 <a-image id="textTatekanban_${i}" src="#text_tatekanban_${i}" scale="${sizeTextTatekanban} ${sizeTextTatekanban} ${sizeTextTatekanban}" position="0 0 0.5" ></a-image>
             </a-entity>  
         </a-entity>
     `);
     return image;
+    
+    
 }
-
-
-
 
 //Find nearst point from my location
 function FindNearstPoint(my_location, polygon) {
@@ -315,8 +362,72 @@ function FindNearstPoint(my_location, polygon) {
 
 //Cal distance between 2 point
 function DistanceBetweenPoints(pointA, pointB) {
-   /* var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(pointA.latitude, pointA.longitude), new google.maps.LatLng(pointB.latitude, pointB.longitude));
-    return distance;*/
-     return Math.sqrt((pointA.latitude - pointB.latitude) * (pointA.latitude - pointB.latitude) + (pointA.longitude - pointB.longitude) * (pointA.longitude - pointB.longitude))
+    var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(pointA.latitude, pointA.longitude), new google.maps.LatLng(pointB.latitude, pointB.longitude));
+    return distance;
+    // return Math.sqrt((pointA.latitude - pointB.latitude) * (pointA.latitude - pointB.latitude) + (pointA.longitude - pointB.longitude) * (pointA.longitude - pointB.longitude))
+}
+//Update tatekanban when near <30 meter
+function UpdateTatekanban( i) {
+    var pinLocation = document.getElementById(`pinlocation_${i}`);
+    var tatekanban = document.getElementById(`tatekanban_${i}`);
+    var imgTatekanban = document.getElementById(`imgTatekanban_${i}`);
+    var textTatekanban = document.getElementById(`imgTatekanban_${i}`);
+    //Set pin location
+    pinLocation.setAttribute('scale', '3 3 3');
+    tatekanban.setAttribute('position', '0 5 0');
+    imgTatekanban.setAttribute('scale', '7.5 7.5 7.5');
+    textTatekanban.setAttribute('scale', '4 4 4');
 }
 
+//Check tatekanban attribute 
+function CheckTatekanban(i) {
+    var pinLocation = document.getElementById(`pinlocation_${i}`);
+    var tatekanban = document.getElementById(`tatekanban_${i}`);
+    var imgTatekanban = document.getElementById(`imgTatekanban_${i}`);
+    var textTatekanban = document.getElementById(`imgTatekanban_${i}`);
+
+    if (pinLocation.getAttribute('scale').x != 7 ) {
+        pinLocation.setAttribute('scale', '7 7 7');
+        tatekanban.setAttribute('position', '0 13 0');
+        imgTatekanban.setAttribute('scale', '12 12 12');
+        textTatekanban.setAttribute('scale', '6 6 6');
+    } 
+}
+//Check this tatekanban is inside ?
+function UpdateTatekanbanInside(i) {
+    var pinLocation = document.getElementById(`pinlocation_${i}`);
+    var tatekanban = document.getElementById(`tatekanban_${i}`);
+    var imgTatekanban = document.getElementById(`imgTatekanban_${i}`);
+    var textTatekanban = document.getElementById(`imgTatekanban_${i}`);
+    if (pinLocation.getAttribute('scale').x != 1) {
+        pinLocation.setAttribute('scale', '1 1 1');
+        tatekanban.setAttribute('position', '0 3 0');
+        imgTatekanban.setAttribute('scale', '4 4 4');
+        textTatekanban.setAttribute('scale', '2.5 2.5 2.5');
+    }
+}
+function CheckDistanceTatekanban(i, distance) {
+    var pinLocation = document.getElementById(`pinlocation_${i}`);
+    var tatekanban = document.getElementById(`tatekanban_${i}`);
+    var imgTatekanban = document.getElementById(`imgTatekanban_${i}`);
+    var textTatekanban = document.getElementById(`imgTatekanban_${i}`);
+    if (distance <= 10) {
+        const scaleFactor = Math.min(1, distance / 10);
+        const newpinLocationScale = new THREE.Vector3().lerpVectors(new THREE.Vector3(sizeImgTatekanbanLessThanDistance, sizeImgTatekanbanLessThanDistance, sizeImgTatekanbanLessThanDistance), new THREE.Vector3(sizeImgTatekanban, sizeImgTatekanban, sizeImgTatekanban), scaleFactor);
+        const newtatekanbanScale = new THREE.Vector3().lerpVectors(new THREE.Vector3(0, posTatekanbanLessThanDistance, 0), new THREE.Vector3(0, posTatekanban, 0), scaleFactor);
+        const newimgTatekanbanScale = new THREE.Vector3().lerpVectors(new THREE.Vector3(sizeImgTatekanbanLessThanDistance, sizeImgTatekanbanLessThanDistance, sizeImgTatekanbanLessThanDistance), new THREE.Vector3(sizeImgTatekanban, sizeImgTatekanban, sizeImgTatekanban), scaleFactor);
+        const newtextTatekanbanScale = new THREE.Vector3().lerpVectors(new THREE.Vector3(sizeTextTatekanbanLessThanDistance, sizeTextTatekanbanLessThanDistance, sizeTextTatekanbanLessThanDistance), new THREE.Vector3(5, 5, 5), scaleFactor);
+        pinLocation.setAttribute('scale', `${newpinLocationScale.x} ${newpinLocationScale.y} ${newpinLocationScale.z}`);
+        tatekanban.setAttribute('position', `${newtatekanbanScale.x} ${newtatekanbanScale.y} ${newtatekanbanScale.z}`);
+        imgTatekanban.setAttribute('scale', `${newimgTatekanbanScale.x} ${newimgTatekanbanScale.y} ${newimgTatekanbanScale.z}`);
+        textTatekanban.setAttribute('scale', `${newtextTatekanbanScale.x} ${newtextTatekanbanScale.y} ${newtextTatekanbanScale.z}`);
+        //alert(`${data[i].name} pinlocation_${i}` + '\n' + newpinLocationScale.x + " " + newpinLocationScale.y + " " + newpinLocationScale.z + `\n tatekanban_${i}` + '\n' + newtatekanbanScale.x + " " + newtatekanbanScale.y + " " + newtatekanbanScale.z + ` \n imgTatekanban_${i}` + '\n' + newimgTatekanbanScale.x + " " + newimgTatekanbanScale.y + " " + newimgTatekanbanScale.z + `\n textTatekanban_${i}` + '\n' + newtextTatekanbanScale.x + " " + newtextTatekanbanScale.y + " " + newtextTatekanbanScale.z);
+    } else {
+        if (pinLocation.getAttribute('scale').x != sizePinLocation) {
+            pinLocation.setAttribute('scale', `${sizePinLocation} ${sizePinLocation} ${sizePinLocation}`);
+            tatekanban.setAttribute('position', `0 ${posTatekanban} 0`);
+            imgTatekanban.setAttribute('scale', `${sizeImgTatekanban} ${sizeImgTatekanban} ${sizeImgTatekanban}`);
+            textTatekanban.setAttribute('scale', `${sizeTextTatekanban} ${sizeTextTatekanban} ${sizeTextTatekanban}`);
+        }
+    }
+}
