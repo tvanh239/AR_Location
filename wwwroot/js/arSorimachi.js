@@ -78,6 +78,18 @@ var dataSauNhu = [
     { latitude: 10.780770872931942, longitude: 106.65091247047467 },
     { latitude: 10.780768447246013, longitude: 106.65088211042914 },
 ]
+var dataVA = [
+    { latitude: 10.79975224771338, longitude: 106.70103220154627 },
+    { latitude: 10.799774642678182, longitude: 106.70107243467827 },
+    { latitude: 10.799700212347506, longitude: 106.70111467946687 },
+    { latitude: 10.799676500025885, longitude: 106.70106841136506 }
+]
+var datachungCuMyPhuoc = [
+    { latitude: 10.800125296185898, longitude: 106.7017088672338 },
+    { latitude: 10.800130779289834, longitude: 106.70192576695544 },
+    { latitude: 10.799596567834131, longitude: 106.70223038349812 },
+    { latitude: 10.799505704791214, longitude: 106.70206372158573 }
+]
 
 var data = [
 /*    { name: "Sangの家", polygon: dataSang },
