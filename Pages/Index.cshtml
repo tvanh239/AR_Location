@@ -9,13 +9,15 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/aframe.js"></script>
     <script src="~/js/aframe-ar-nft.js"></script>
-    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-    <script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex-location-only.js'></script>
-    <script src="~/js/arSorimachi.js"></script>
+
+    <script src="~/js/aframe-look-at-component.js"></script>
+    <script type='text/javascript' src='~/js/ar-threex-location-only.js'></script>
+    <script src="~/js/arNew.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
     <a-scene vr-mode-ui="enabled: false"
@@ -24,7 +26,7 @@
             <img id="pinLocation" src="~/img/pin_location.png">
             <img id="tatekanban" src="~/img/tatekanban.png">
         </a-assets>
-        <a-camera gps-new-camera rotation-reader>
+        <a-camera id="myCamera" gps-new-camera rotation-reader rotation="">
         </a-camera>
     </a-scene>
 </body>

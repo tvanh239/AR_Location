@@ -58,8 +58,10 @@ var data = [
 //Program Run
 window.onload = () => {
     const el = document.querySelector("[gps-new-camera]");
+    alert("123")
     el.addEventListener("gps-camera-update-position", e => {
         var my_location = { latitude: e.detail.position.latitude, longitude: e.detail.position.longitude };
+        //alert(my_location.latitude + " " + my_location.longitude);
         if (isCreated == false) {
             google.maps.Polygon.prototype.my_getBounds = function () {
                 var bounds = new google.maps.LatLngBounds()
