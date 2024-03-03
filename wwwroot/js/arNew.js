@@ -1,4 +1,4 @@
-﻿var dataVA = [
+var dataVA = [
     { latitude: 10.79975224771338, longitude: 106.70103220154627 },
     { latitude: 10.799774642678182, longitude: 106.70107243467827 },
     { latitude: 10.799700212347506, longitude: 106.70111467946687 },
@@ -11,18 +11,61 @@ var datachungCuMyPhuoc = [
     { latitude: 10.799505704791214, longitude: 106.70206372158573 }
 ]
 
+var data1 = [
+    { latitude: 10.620472120695355, longitude: 106.28805673711432 },
+    { latitude: 10.62022317140371, longitude: 106.2882261457971 },
+    { latitude: 10.620135829002672, longitude: 106.2881765469475 },
+    { latitude: 10.620215046530253, longitude: 106.28801535068636 }
+];
+var data2 = [
+    { latitude: 10.62020489043812, longitude: 106.28825301184061 },
+    { latitude: 10.620109423155586, longitude: 106.2884038750081 },
+    { latitude: 10.620022704010243, longitude: 106.28834753440243 },
+    { latitude: 10.620103641800478, longitude: 106.28818533311937 },
+];
+var data3 = [
+    { latitude: 10.620173255386403, longitude: 106.28797177326686 },
+    { latitude: 10.620067804803396, longitude: 106.28815952789054 },
+    { latitude: 10.619909628860643, longitude: 106.28804955732525 },
+    { latitude: 10.61998871684226, longitude: 106.28786984932833 }
+];
+var data4 = [
+    { latitude: 10.620057259743099, longitude: 106.28817293893513 },
+    { latitude: 10.619933355256842, longitude: 106.28835801134917 },
+    { latitude: 10.619798949740412, longitude: 106.28825875792431 },
+    { latitude: 10.619867492683806, longitude: 106.28807100330062 }
+]
+var data5 = [
+    { latitude: 10.620371019219753, longitude: 106.28755870139886 },
+    { latitude: 10.62027873014721, longitude: 106.28779473403803 },
+    { latitude: 10.62008628287226, longitude: 106.28767671684601 },
+    { latitude: 10.620218112560758, longitude: 106.28742188980759 }
+]
+
+var data6 = [
+    { latitude: 10.61663557389962, longitude: 106.28463252163587 },
+    { latitude: 10.61647850094439, longitude: 106.28585287768661 },
+    { latitude: 10.615814142220856, longitude: 106.285606131849 },
+    { latitude: 10.616067227081308, longitude: 106.28418992554468 }
+];
 var src_tatekanban = "/img/tatekanban_new.png";
 var oldLocation = null;
 var isCreated = false;
 var locationInsideId = null;
 var arrLocation = [];
-var sizeImgTatekanban = 20;
-var sizeTextTatekanban = 10;
+var sizeImgTatekanban = 8;
+var sizeTextTatekanban = 5;
 //-------------------------------------------------------------------
 
 var data = [
-    { name: "Nhà VA", polygon: dataVA },
-    { name: "chung cư Mỹ Phước", polygon: datachungCuMyPhuoc },
+    { name: "VAさんのほ場", polygon: data1 },
+    { name: "Sangさんのほ場", polygon: data2 },
+    { name: "Luyenさんのほ場", polygon: data3 },
+    { name: "Thuさんのほ場", polygon: data4 },
+    { name: "Trungさんのほ場", polygon: data5 },
+    { name: "500Metほ場", polygon: data6 },
+/*    { name: "Nhà VA", polygon: dataVA },
+    { name: "chung cư Mỹ Phước", polygon: datachungCuMyPhuoc },*/
     // { name: "Báo tuổi trẻ", polygon: data_Sorimachi },
     /*    { name: "Ủy ban nhân dân", polygon: dataUyBanPN },
         { name: "Aroma Tieng Anh", polygon: dataAroma },
@@ -58,7 +101,7 @@ var data = [
 //Program Run
 window.onload = () => {
     const el = document.querySelector("[gps-new-camera]");
-    alert("123")
+    alert("ARの世界へようこそ")
     el.addEventListener("gps-camera-update-position", e => {
         var my_location = { latitude: e.detail.position.latitude, longitude: e.detail.position.longitude };
         //alert(my_location.latitude + " " + my_location.longitude);
